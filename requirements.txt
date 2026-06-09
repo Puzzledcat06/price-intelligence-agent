@@ -1,1 +1,64 @@
+# API
+
+fastapi
+uvicorn[standard]
+
+# AI Agents
+
+langgraph
+langchain
+langchain-core
+
+# LLM
+
+groq
+
+# Web Scraping
+
+playwright
+beautifulsoup4
+lxml
+
+# Database
+
+sqlalchemy
+psycopg2-binary
+
+# Cache
+
+redis
+
+# Environment Variables
+
+python-dotenv
+
+# Data Processing
+
+pandas
+numpy
+
+# Product Matching
+
+rapidfuzz
+
+# Logging
+
+loguru
+
+# Retry Logic
+
+tenacity
+
+# Validation
+
+pydantic
+
+# HTTP Client
+
+httpx
+
+# Testing
+
+pytest
+pytest-asyncio
 
