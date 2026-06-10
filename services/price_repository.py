@@ -11,7 +11,6 @@ class PriceRepository:
 
         try:
 
-            # Find retailer
             retailer = (
                 db.query(Retailer)
                 .filter(
@@ -25,7 +24,6 @@ class PriceRepository:
                     f"Retailer not found: {product_data.retailer}"
                 )
 
-            # Find product
             product = (
                 db.query(Product)
                 .filter(
@@ -34,7 +32,6 @@ class PriceRepository:
                 .first()
             )
 
-            # Create product if missing
             if not product:
 
                 product = Product(
@@ -47,7 +44,6 @@ class PriceRepository:
                 db.commit()
                 db.refresh(product)
 
-            # Create price snapshot
             price_record = Price(
                 product_id=product.id,
                 retailer_id=retailer.id,
@@ -69,6 +65,108 @@ class PriceRepository:
             print(
                 f"Error saving price: {e}"
             )
+
+        finally:
+
+            db.close()
+
+    @staticmethod
+    def get_price_history(product_name: str):
+
+        db = SessionLocal()
+
+        try:
+
+            product = (
+                db.query(Product)
+                .filter(
+                    Product.model == product_name
+                )
+                .first()
+            )
+
+            if not product:
+                return []
+
+            history = (
+                db.query(Price)
+                .filter(
+                    Price.product_id == product.id
+                )
+                .all()
+            )
+
+            return history
+
+        finally:
+
+            db.close()
+
+    @staticmethod
+    def get_latest_price(product_name: str):
+
+        db = SessionLocal()
+
+        try:
+
+            product = (
+                db.query(Product)
+                .filter(
+                    Product.model == product_name
+                )
+                .first()
+            )
+
+            if not product:
+                return None
+
+            latest_price = (
+                db.query(Price)
+                .filter(
+                    Price.product_id == product.id
+                )
+                .order_by(
+                    Price.collected_at.desc()
+                )
+                .first()
+            )
+
+            return latest_price
+
+        finally:
+
+            db.close()
+
+    @staticmethod
+    def get_cheapest_price(product_name: str):
+
+        db = SessionLocal()
+
+        try:
+
+            product = (
+                db.query(Product)
+                .filter(
+                    Product.model == product_name
+                )
+                .first()
+            )
+
+            if not product:
+                return None
+
+            cheapest_price = (
+                db.query(Price)
+                .filter(
+                    Price.product_id == product.id
+                )
+                .order_by(
+                    Price.price.asc()
+                )
+                .first()
+            )
+
+            return cheapest_price
 
         finally:
 
