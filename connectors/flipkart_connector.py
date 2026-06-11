@@ -10,6 +10,8 @@ class FlipkartConnector(BaseConnector):
         return [
             ProductData(
                 title=query,
+                brand="Apple",
+                storage="256GB",
                 price=1000,
                 url="https://example.com",
                 retailer="Flipkart"

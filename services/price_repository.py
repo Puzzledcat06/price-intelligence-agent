@@ -35,9 +35,9 @@ class PriceRepository:
             if not product:
 
                 product = Product(
-                    brand="Unknown",
+                    brand=product_data.brand,
                     model=product_data.title,
-                    storage="Unknown"
+                    storage=product_data.storage
                 )
 
                 db.add(product)

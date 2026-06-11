@@ -1,5 +1,9 @@
 from rapidfuzz import fuzz
 
+from services.product_normalizer import (
+    ProductNormalizer
+)
+
 
 class ProductMatcher:
 
@@ -10,11 +14,25 @@ class ProductMatcher:
         threshold: int = 75
     ):
 
-        score = fuzz.token_set_ratio(
-            product1.lower(),
-            product2.lower()
+        product1 = (
+            ProductNormalizer.normalize(
+                product1
+            )
         )
 
-        print(f"Match Score: {score}")
+        product2 = (
+            ProductNormalizer.normalize(
+                product2
+            )
+        )
+
+        score = fuzz.token_set_ratio(
+            product1,
+            product2
+        )
+
+        print(
+            f"Match Score: {score}"
+        )
 
         return score >= threshold

@@ -9,6 +9,8 @@ class AmazonConnector(BaseConnector):
         return [
             ProductData(
                 title=query,
+                brand="Apple",
+                storage="256GB",
                 price=1200,
                 url="https://amazon.in/example",
                 retailer="Amazon"
